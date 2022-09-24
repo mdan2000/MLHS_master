@@ -1,0 +1,444 @@
+         \documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{ amssymb }
+\usepackage{ wasysym }
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{array,epsfig}
+\usepackage{amsmath}
+\usepackage{ dsfont }
+\usepackage{ textcomp }
+\usepackage{amsfonts}
+\usepackage{ gensymb }
+\usepackage{amssymb}
+\usepackage{amsxtra}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\newcommand\mymathop[1]{\mathop{\operatorname{#1}}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\newtheorem{solution}{Решение}
+\newtheoremstyle{problemstyle}  % <name>
+        {3pt}                                               % <space above>
+        {25pt}                                               % <space below>
+        {\normalfont}                               % <body font>
+        {}                                                  % <indent amount}
+        {}                 % <theorem head font>
+        {\normalfont\bfseries.}         % <punctuation after theorem head>
+        {.5em}                                          % <space after theorem head>
+        {}                                                  % <theorem head spec (can be left empty, meaning `normal')>
+\theoremstyle{problemstyle}
+\newtheorem{problem}{\bfseriesЗадача}
+\newtheoremstyle{ans}  % <name>
+        {3pt}                                               % <space above>
+        {3pt}                                               % <space below>
+        {\normalfont}                               % <body font>
+        {}                                                  % <indent amount}
+        {}                 % <theorem head font>
+        {\normalfont\bfseries}         % <punctuation after theorem head>
+        {.5em}                                          % <space after theorem head>
+        {}                                                  % <theorem head spec (can be left empty, meaning `normal')>
+\theoremstyle{ans}
+\newtheorem{cor}{Corollary}
+\newtheorem*{ans}{Ответ}
+\newtheorem{lem}{Lemma}
+\newtheorem*{joke}{Joke}
+\newtheorem{ex}{Example}
+\newtheorem*{soln}{\bfseries\textit{Ответ}:}
+\newtheorem{prop}{Proposition}
+\newtheorem*{zad}{\zadname}
+\newtheorem{definition}{\bfseries\textit{Опредление}}
+\newtheorem{theorem}{\bfseries\textit{Теорема}}
+\newtheorem{example}{\textit{Пример}}
+\newtheorem{comment}{\bfseries{Замечание}}
+\newtheorem{train}{\textit{Упражнение}}
+\newtheorem{statement}{\textbf{Утверждение}}
+\newtheorem*{statement*}{ \textbf{Утверждение}}
+\newtheorem{conseq}{\textbf{Следствие}}
+\newtheorem*{conseq*}{\textbf{Следствие}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Expect}{\mathsf{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\U}{\mathbb{U}}
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\usepackage[unicode, pdftex]{hyperref}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+%---------------------------------------------------------
+\usepackage{amsfonts}
+%Hyphenation rules
+%---------------------------------------------------------
+\usepackage{hyphenat}
+\hyphenation{ма-те-ма-ти-ка вос-ста-нав-ли-вать}
+ \usepackage{titlesec}
+\titlelabel{\thetitle.\quad}
+
+
+\title{Лекция 1 по введению в IOT}
+\author{Мячин Данил БПМИ187}
+\date
+
+\begin{document}
+\begin{center}
+Кантонистова Елена Олеговна\\
+Математика для анализа данных
+\end{center}
+\tableofcontents
+\newpage
+\section{Лекция 1}
+\subsection{Как устроен курс}
+\begin{itemize}
+    \item 1 модуль - матан и линал
+    \item 2 модуль - дискра, тервер
+    \item 3/4 модуль - статистика
+\end{itemize}
+\subsection{Практика}
+Исследовать функцию 
+$$f(x) = x^3 - 3x^2 + 4$$
+Найдём 
+
+\subsection{SymPy}
+В Питоне есть библиотека SymPy, которая предоставляет интерфейс для вычисления производных
+\begin{lstlisting}[language=bash]
+!pip install sympy
+\end{lstlisting}
+
+Далее в питоне зададим переменную и производную:
+\begin{lstlisting}[language=python]
+import sympy as sp
+x = sp.Symbol('x')
+sp.diff(x**6)
+\end{lstlisting}
+Теперь будем анализировать функцию из практики:
+\begin{lstlisting}[language=python]
+def f(x):
+    return x**3 - 3*x**2 + 4
+\end{lstlisting}
+Чтобы найти нули функции, надо решить уравнение $f(x) = 0$. В SymPy для этого есть функция solve:
+\begin{lstlisting}[language=python]
+sp.solve(f(x). x)
+[-1, 2]
+\end{lstlisting}
+Теперь найдём производную функции $f(x)$ и затем её нули, чтобы найти экстремумы
+\begin{lstlisting}[language=python]
+df_x = sp.diff(f(x))
+#df_x == 3x^2
+
+sp.solve(df_x, x)
+# [0, 2]
+
+f(0), f(2)
+# (4, 0)
+\end{lstlisting}
+Точно также очень просто можем находить втору производную и находить точки перегиба функции
+\begin{lstlisting}[language=python]
+d2f_x = sp.diff(df_x)
+d2f_x
+# 6x - 6
+
+sp.solve(d2f_x, x)
+#[1]
+
+f(1)
+#2
+\end{lstlisting}
+
+\subsection{Рисуем графики}
+Что нам нужно будет сделать?
+\begin{itemize}
+    \item Нарисовать график $f(x)$, подписать оси
+    \item НАпечатать под графиком при помощи \textit{Markdown} экстремумы, точки перегиба и значения функции f(x) в этих точках
+\end{itemize}
+\subsubsection{Подключаем библиотеку}
+\begin{lstlisting}[language=python]
+import matplotlib.pyplot as plt
+%matplotlib inline # чё-то типо отображения графиков
+\end{lstlisting}
+
+\subsubsection{Рисуем график функции f(x)}
+\begin{lstlisting}[language=python]
+import numpy as np
+
+x_values = [x for x in np.arange(-5, 5, 0.1)]
+#  or    = np.linspace(-5, 5, 100)
+f_values = [f(x)] for x in x_values]
+
+plt.plot(x_values, f_values)
+\end{lstlisting}
+\textbf{Вставить график}
+
+\subsubsection{Изменяем размер картинки и граничные значения по осям}
+\begin{lstlisting}[language=python]
+plt.figure(figsize=(10, 10))
+
+plt.plot(x_values, y_values)
+
+plt.xlim([-3, 5])
+plt.ylim([-5, 7])
+\end{lstlisting}
+\textbf{Вставить график}
+
+\subsubsection{Добавим названия осей и подпись к графику}
+\begin{lstlisting}[language=python]
+plt.title('Graph of fucntion f(x) with extremum and dots of ...')
+
+plt.xlabel('x')
+plt.ylabel('f(x)')
+\end{lstlisting}
+\textbf{Вставить график}
+\subsubsection{Добавим оси и подпишем под картинкой информацию об экстремумах и точках перегиба}
+\begin{lstlisting}[language=python]
+import numpy as np
+
+x_values = [x for x in np.arange(-5, 5, 0.1)]
+f_values = [f(x) for x in x_values] 
+
+plt.figure(figsize=(10,10))
+
+plt.axvline(x=0, c = 'black')
+plt.axhline(y=0, c = 'black')
+
+plt.plot(x_values, f_values)
+
+plt.xlim([-3, 5])
+plt.ylim([-5, 7])
+
+plt.title('Graph of fucntion f(x) with extremum and dots of ...')
+
+plt.xlabel('x')
+plt.ylabel('f(x)')
+
+plt.show()
+\end{lstlisting}
+\textbf{Вставить график}
+
+\subsection{Метод градиентного спуска}
+\subsubsection{Теорема о градиенте}
+\textbf{Градиент} - это вектор, в направлении которого функция растёт быстрее всего.\\
+\textbf{Антиградиент} (вектор противоположный градиенту) - вектор, в направлении которого функция быстрее всего убывает.\\
+\subsubsection{Применение в машинном обучении}
+Для чего нам это нужно? В машинном обучении мы минимизируем значение функции, которая показывает ошибку модели. Иными словами: наша задача при обучении модели - найти такие веса \textbf{w}, на которых достигается  \textbf{минимум функции ошибок}.\\
+В простейшем случае, если ошибка среднеквадратическая, то её график - парабола.\\
+\subsubsection{Идея применения градиентного спуска}
+На каждом шаге (на каждой итерации метода) движемся в сторону антиградиента функции потерь!\\
+То есть на каждом шаге движемся в направлении уменьшении ошибки.\\
+Вектор градиента функции потерь обозначают \textbf{grad Q} или \textbf{$\nabla Q$}
+\subsubsection{Метод градиентного спуска на пальцах}
+\begin{itemize}
+    \item Встаём в некоторую точку функции
+    \item Вычисляем градиент
+    \item Переходим в новую точку в направлении антиградиента
+    \item Повторяем  процесс из новой точки
+\end{itemize}
+\subsubsection{Метод градиентного спуска (одномерный случай)}
+Пусть у нас только один вес - $w$.\\
+Тогда при добавлении к весу $w$ слагаемоего $-\frac{\partial Q}{\partial w}$ функция $Q(w)$ убывает.\\
+Тогда алгоритм выглядит следующим образом:\\
+\begin{itemize}
+    \item Инициализируем вес $w^{(0)}$
+    \item На каждом следующем шаге обновляем вес, добавляя $-\frac{\partial Q}{\partial w}(w^{(k - 1)})$:
+    $$w^{(k)} = w^{(k-1)} - \frac{\partial Q}{\partial w}(w^{(k - 1)})$$
+\end{itemize}
+\subsubsection{Метод градиентного спуска (общий случай)}
+Пусть $w_0,\;w_1,\;\dots \; ,\;w_n$ - веса, которые мы ищем.\\
+Тогда $\nabla Q(w) = \{\frac{\partial Q}{\partial w_0}, \; \frac{\partial Q}{\partial w_1}, \; \dots\;, \; \frac{\partial Q}{\partial w_n}\}$\\
+Тогда алгоритм выглядит так:\\
+\begin{itemize}
+    \item Инициализируем веса $w^{(0)}$ (заметим, что это вектор весов)
+    \item На каждом шаге обновляем веса по формуле:
+    $$w^{(k)} = w^{(k-1)} - \nabla Q(w^{(k - 1)})$$
+\end{itemize}
+\subsubsection{Параметр learning rate}
+В формулу обычно добавляют параметр $\eta$ - величина градиентного спуска (\textbf{learning rate}). Он отвечает за скорость движения в сторону антиградиента: \\
+\begin{itemize}
+    \item Инициализируем веса $w^{(0)}$ (заметим, что это вектор весов)
+    \item На каждом шаге обновляем веса по формуле:
+    $$w^{(k)} = w^{(k-1)} - \eta \nabla Q(w^{(k - 1)})$$
+\end{itemize}
+\subsubsection{Теорема о поиске в выпуклой гладкой функции}
+Если функция $Q(w)$ выпуклая и гладкая, а также имеет минимум в точке $w^*$, то метод градиентного спуска при аккуратно подобранному $\eta$ через некоторое число шагов гарантированно попадает в малую окрестность точки $w^*$.
+
+\subsection{Реализация градиентного спуска на python}
+\begin{lstlisting}[language=python]
+def gradient_descent(x_start, learning_rate, epsilon, num_iterations):
+    x_curr = x_start
+    df_x = sp.diff(f(x))
+    
+    trace = []
+    trace.append(x_curr)
+    
+    for i in range(num_iterations):
+        x_new = c_curr + df_x.subs(x, x_curr)
+        trace.append(x_new)
+        
+        if abs(x_new - x_curr) < epsilon:
+            return x_curr, trace
+            
+    return x_curr, trace
+\end{lstlisting}
+\newpage
+
+\section{Лекция 2}
+\subsection{Линейная регрессия}
+\textbf{Линейная регрессия} - функция $a(x) = \omega_0 + \omega_1 x_1 + \omega_2 x_2 + \dots + \omega_l x_l$, где $x$ - \textbf{вектор признаков}\\
+Также есть \textbf{целевая переменная}, которую мы предсказываем - $y$\\
+$w$ - \textbf{веса} линейной регрессии\\
+Запишем в другой форме: $a(x) = \omega_0 + \sum\limits_{i=1}^{l} \omega_i x_i$\\
+Также мы это можем записать в другой форме: давайте добавим ещё один признак у всех обектов, который будет равен единице: $x = (1, x_1, x_2, \dots, x_n)$, и тогда всё записывается ещё красивее:
+$$a(x) = \sum\limits_{i=0}^{l} \omega_i x_i = (\overrightarrow{\omega}, \overrightarrow{x})$$
+Где $a(x) = (\overrightarrow{\omega}, \overrightarrow{x})$ - предсказание модели на объекте $x$. Но это предсказание для одного объекта.\\
+Мы можем записать предсказания в матричном виде для нескольких объектов. Возьмём $X$ - матрицу объект-признак. В каждом строке описан один объект, а кол-во строк - это кол-во объектов.\\
+В матричном виде предсказание выглядит как $a(X) = X \cdot w$
+
+\subsection{Функция ошибок MSE}
+\textbf{MSE} (Mean Squared Error) = $\frac{1}{d}\sum\limits_{i=1}^{d} (a(x_i) - y_i)^2$, где $d$ - количество данных. При этом в задаче обучения мы хотим $MSE \to \min\limits_{\overrightarrow\omega}$. Мы уже научились и  можем делать минимизацию функции с помощью Градиентного спуска.\\
+
+\subsection{Матричное представление MSE}
+$$MSE = \frac{1}{d}||X \omega-y||^2$$
+Где $||\overrightarrow{a}|| = \sqrt{a_1^2 + a_2^2 + \dots + a_n^2}$\\
+Соостветственно $||\overrightarrow{a}||^2 = a_1^2 + a_2^2 + \dots + a_n^2$
+
+\subsection{Как решать задачу минимизации MSE}
+\subsubsection{Аналитическое решение}
+Это решение, которое даёт точное решение\\
+Решаем уравнение $\nabla_\omega Q(\omega) = 0$
+
+\subsubsection{Приближённое решение}
+С помощью GD шагаем $\omega = \omega - \eta \nabla_\omega Q(\omega)$
+
+
+\subsection{Производная по вектору}
+Пусть у нас есть $\overrightarrow{x} = (x_1, \dots, x_n)$\\
+Градиент функции $f(x)$ рассчитывается как $\nabla_x f(x) = (\frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \dots, \frac{\partial f}{\partial x_n})$\\
+Если мы хотим взять градиент по матрице $A$ от функции $f$, то это выглядит как $\nabla_A f(A) = \begin{pmatrix}
+\frac{\partial f}{\partial A_{11}} & \dots & \frac{\partial f}{\partial A_{1n}}\\
+\dots & \dots & \dots\\
+\frac{\partial f}{\partial A_{n1}} & \dots &  \frac{\partial f}{\partial A_{nn}}
+\end{pmatrix}
+$
+
+\subsubsection{Пример 1. Подсчёт градиента скалярного произведения}
+Пусть у нас есть вектор весов $\overrightarrow{\omega}$ и вектор $\overrightarrow{x}$. Есть скалярное произведение $(\overrightarrow{\omega}, \overrightarrow{x})$. Мы хотим посчитать $\nabla_x (\overrightarrow{\omega}, \overrightarrow{x})$.\\
+Мы знаем, что $\frac{\partial}{\partial x_i} (\overrightarrow{\omega}, \overrightarrow{x}) = \frac{\partial}{\partial x_i}(\omega_1 x_1 + \dots + \omega_n x_n) = \omega_i$\\
+Тогда $\nabla_x (\overrightarrow{\omega}, \overrightarrow{x}) = (\frac{\partial}{\partial x_1}(\overrightarrow{\omega}, \overrightarrow{x}), \frac{\partial}{\partial x_2}(\overrightarrow{\omega}, \overrightarrow{x}), \dots , \frac{\partial}{\partial x_n}(\overrightarrow{\omega}, \overrightarrow{x})) = (\omega_1, \omega_2, \dots, \omega_n) = \overrightarrow{\omega}$
+
+\subsubsection{Пример 2. Подсчёт градиента от матрицы}
+Пусть есть матрица $A_{n\times n}$ и вектор $\overrightarrow{x} \in \mathbb{R}^n$.\\
+Функция $x^T A x$ - это число (давайте посмотрим на размерности)\\
+$\underline{(1\times n) (n \times n)} (n \times 1) = (1 \times n) (n \times 1) = (1 \times 1)$\\
+Теперь мы хотим от этой функции находить градиент:\\
+Давайте попробуем посчитать $\frac{\partial}{\partial x_i} x^T A x = \frac{\partial}{\partial x} \sum\limits_{j=1}^{n}x_j(Ax)_j = \frac{\partial}{\partial x_i} \sum\limits_{j = 1}^{n} x_j(\sum\limits_{k=1}^{n} a_{jk} x_k) = \frac{\partial}{\partial x_i} \sum\limits_{j = 1}^{n}\sum\limits_{k=1}^{n} a_{jk} x_j x_k = \sum\limits_{j=1, j\neq i}^n a_{ji}x_j + \sum\limits_{k=1, k \neq i}^{n} a_{ik}x_i + 2a_{ii}x_i = \sum\limits_{i=1}^{n} \sum\limits_{j=1}^{n} (a_{ij} + a_{ji})x_j$ - i-я производная.\\
+
+Тогда $\nabla_x (x^T A x) = (A + A^T)x$
+
+\subsection{Минимизация MSE с помощью градиента}
+Вспоминаем, что MSE выглядит как $||y - X\omega||^2$. Но это можно переписать в явном виде без квадрата:\\
+$||y - X\omega||^2 = (y - X\omega)^T (y - X\omega) \to \min\limits_{\omega}$\\
+Раскрываем скобки для поиска градиента: $\nabla_\omega ((y^Ty)^{= 0} - \omega^T X^T y - y^T X \omega + \omega^T X^T X \omega) = 0$\\
+$\nabla_\omega ( - \omega^T X^T y - y^T X\omega + \omega^T X^T X \omega) = -X^T y - X^Ty + 2 X^T X \omega = 0$ (для последнего слагаемого смотрим вывод пункта 2.5.2)\\
+Перекинем слагаемые в разные стороны: $2 X^T X \omega = 2 X^T y$. Сократим на двойку. Мы бы могли сократить матрицы, но обратной может не быть. Зато мы можем с каждой из сторон умножить на обратную матрицу к $X^T X$:\\
+$X^T X \omega = X^T y \to (X^T X)^{-1}(X^T X) \omega = (X^T X)^{-1}X^T y \to \omega = (X^T X)^{-1}X^T y$
+
+\subsection{Градиент функции потерь}
+Из подсчитанного можем сказать, что градиент функции потерь для MSE будет выглядеть как 
+$$\nabla Q(\omega) = 2X^T (X \omega - y)$$
+
+Но давайте будем находить $\omega$ с помощью GD: 
+\begin{itemize}
+    \item На шаге обновления точки, у нас $\omega_{next} = \omega_{prev} - \eta \nabla Q(\omega)$
+    \item Запишем зная, чему равно $\nabla Q(\omega)$: $\omega_{next} = \omega_{prev} - 2\eta X^T(X\omega_{prev} - y)$
+\end{itemize}
+
+\subsection{Реализация на питоне}
+\subsubsection{Генерирование данных для задачи регрессии}
+Давайте сгенирируем данные и визиализируем их:
+\begin{lstlisting}[language=python]
+import random
+import matplotlib.pyplot as plt
+import numpy as np
+%matplotlib inline
+
+X = np.linspace(-10, 10, 100)
+
+print(X.shape)
+
+y = X * (np.random.random_sample(len(X)) + 0.5)
+X = X.reshape(len(X), 1)
+
+print(X.shape)
+
+plt.scatter(X, y)
+\end{lstlisting}
+
+\subsubsection{Функция подсчёта ошибки}
+Также давайте напишем свой MSE:
+\begin{lstlisting}[language=python]
+
+def MSE(X, y, theta):
+    m = len(y)
+    
+    error = (1./m) * (np.linalg.norm(X @ theta - y) ** 2)
+    return error
+\end{lstlisting}
+
+\subsubsection{Реализация градиентного спуска}
+Теперь у нас есть всё, чтобы реализовать свой градиентный спуск:\\
+\begin{lstlisting}[language=python]
+def gradient_descent(X, y, learning_rate, iterations):
+    
+    X = np.hstack((np.ones((X.shape[0], 1)), X)) # add column of ones
+    params = np.random.rand(X.shape[1])
+    
+    m = X.shape[0]
+    
+    cost_track = np.zeros((iterations, 1))
+    
+    for i in range(iterations):
+        params = params - 2./m * learning_rate * (X.T @ ((X @ params) - y))
+        cost_track[i] = MSE(X, y, params)
+        
+    return cost_track, params
+\end{lstlisting}
+
+\subsubsection{Функция предсказания модели}
+Записать предсказание модели можно очень просто:\\
+\begin{lstlisting}[language=python]
+def predict(X, params):
+    X = np.hstack((np.ones((X.shape[0], 1)), X))
+    return X @ params
+\end{lstlisting}
+
+\subsubsection{Применение градиентного спуска}
+Применяем градиентный спуск:\\
+\begin{lstlisting}[language=python]
+track, weights = stochastic_gradient_descent(X, y, 0.01, 100)
+plt.plot(track) # visualize errors
+\end{lstlisting}
+\\
+Теперь сделаем предсказание и посмотрим на визуализацию этого предсказания:\\
+\begin{lstlisting}[language=python]
+pred = predict(X, weights)
+plt.scatter(X, y)
+plt.plot(X, pred, '-', c = 'r')
+\end{lstlisting}
+
+\end{document}
