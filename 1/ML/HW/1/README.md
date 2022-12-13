@@ -23,3 +23,12 @@
 
 Что удалось сделать отлично:
 * Реализацию сервис на FastApi - в него точно можно совать подходящие данные, потому что они предобрабатываются аналогично нашим. Загружать можно файликом, а не строкой
+
+Пример работы сервиса для получения предсказания на одном объекте:
+![alt text](https://github.com/mdan2000/MLHS_master/blob/master/1/ML/HW/1/list_item.png)
+
+Пример работы сервиса для получения предсказания на нескольких объектах:
+![alt text](https://github.com/mdan2000/MLHS_master/blob/master/1/ML/HW/1/list_items_1.png)
+![alt text](https://github.com/mdan2000/MLHS_master/blob/master/1/ML/HW/1/list_items_2.png)
+
+Сам исходный код сервиса можно найти в файле main.py
